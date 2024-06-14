@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import "./App.css";
+import {Counter} from "./components/Counter";
+import {CounterRandom} from "./components/CounterRandom";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const maxCount: number = 5
+    const minCount: number = 0
+    let [counter, setCounter] = useState<number>(minCount)
+
+    const onClickCounterIncHandler = () => {
+        if (counter < maxCount) {
+            setCounter(++counter)
+        }
+    }
+    const onClickCounterResetHandler = () => {
+        setCounter(minCount)
+    }
+
+
+    return (
+        <div className="App">
+            <Counter counter={counter} onClickCounterIncHandler={onClickCounterIncHandler}
+                     onClickCounterResetHandler={onClickCounterResetHandler} maxCount={maxCount} minCount={minCount}/>
+            <CounterRandom/>
+        </div>
+    );
 }
 
 export default App;

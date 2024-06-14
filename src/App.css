@@ -1,38 +1,149 @@
 .App {
-  text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 20px;
+
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.counter-wrapper {
+    width: 350px;
+    height: 250px;
+    border: 2px solid #61dafb;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #282c34;
+    user-select: none;
+}
+
+.counter {
+    width: 100%;
+    height: 200px;
+    background-color: #61dafb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+}
+
+.counter-red {
+    color: red;
+    width: 100%;
+    height: 200px;
+    background-color: #61dafb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.button-wrapper {
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    border: 2px solid #61dafb;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+}
+
+button {
+    width: 100%;
+    border-radius: 4px;
+    background-color: #61dafb;
+    border: 1px solid #61dafb;
+    cursor: pointer;
+    font-size: 17px;
+
+}
+
+button:disabled {
+    color: black;
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+        font-size: 17px
+    }
+}
+
+
+button:hover {
+    background-color: #89d7ee;
+}
+
+button:active {
+    background-color: white;
+}
+
+.random {
+    width: 200px;
+    height: 50px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress {
+    height: 20px;
+    background-color: yellow;
+    transition: 0.3s;
 }
