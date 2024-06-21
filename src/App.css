@@ -147,3 +147,10 @@ button:active {
     background-color: yellow;
     transition: 0.3s;
 }
+
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
