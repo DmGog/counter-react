@@ -4,7 +4,6 @@
     align-items: center;
     height: 100vh;
     gap: 20px;
-
 }
 
 .App-logo {
@@ -55,6 +54,18 @@
     user-select: none;
 }
 
+.settings-wrapper {
+    width: 350px;
+    height: 250px;
+    border: 2px solid #61dafb;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    user-select: none;
+}
+
 .counter {
     width: 100%;
     height: 200px;
@@ -62,10 +73,56 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
+    font-size: 80px;
+    font-weight: 600;
     border-radius: 5px;
     margin-bottom: 10px;
 
+}
+
+.input-wrapper {
+    width: 100%;
+    padding: 30px 10px;
+    border: 2px solid #61dafb;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    color: #61dafb;
+}
+
+label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+input {
+    max-width: 100px;
+    width: 100%;
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid #61dafb;
+
+}
+
+input:focus-visible {
+    outline: 1px solid #61dafb;
+}
+
+.input-error {
+    background-color: #ea6d6d;
+    border: 1px solid red;
+}
+
+.input-error:focus-visible {
+    outline: 1px solid red;
+}
+
+.input-error::placeholder {
+    color: white;
 }
 
 .counter-red {
@@ -76,7 +133,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
+    font-size: 80px;
+    font-weight: 600;
     border-radius: 5px;
     margin-bottom: 10px;
 }
@@ -90,16 +148,20 @@
     display: flex;
     justify-content: center;
     gap: 20px;
-
+    align-items: center;
 }
 
 button {
+    max-width: 100px;
     width: 100%;
+    height: 40px;
     border-radius: 4px;
     background-color: #61dafb;
     border: 1px solid #61dafb;
     cursor: pointer;
-    font-size: 17px;
+    font-size: 20px;
+    font-weight: 900;
+
 
 }
 
@@ -107,10 +169,6 @@ button:disabled {
     color: black;
     cursor: not-allowed;
     opacity: 0.5;
-
-    &:hover {
-        font-size: 17px
-    }
 }
 
 
@@ -153,4 +211,9 @@ button:active {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+span {
+    font-size: 22px;
+    font-weight: 900;
+    color: red;
 }

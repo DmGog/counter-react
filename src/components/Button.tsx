@@ -3,7 +3,7 @@ import React from "react";
 type ButtonType = {
     title: string
     onClick: () => void
-    disabled: boolean
+    disabled?: boolean
 
 }
 

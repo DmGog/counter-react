@@ -1,57 +1,44 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Button} from "./Button";
 
 type CounterType = {
-    // counter:number
-    // onClickCounterIncHandler: () => void
-    // onClickCounterResetHandler: () => void
-    // minCount: number
-    // maxCount: number
+    count: number
+    startValue: number
+    maxValue: number
+    setCounter: (counter: number) => void
+    viewToSettings: () => void
 }
 
 export const Counter = (props: CounterType) => {
-
-    const maxCount: number = 5
-    const minCount: number = 0
-    let [counter, setCounter] = useState<number>(minCount)
-
-    useEffect(() => {
-        localStorageGet()
-    }, []);
-
-
-    useEffect(() => {
-        localStorageSet()
-    }, [counter]);
-
-    const localStorageSet = () => {
-        localStorage.setItem("counterValue", JSON.stringify(counter))
-    }
-    const localStorageGet = () => {
-        let counterString = localStorage.getItem("counterValue")
-        if (counterString) {
-            let newCounter = JSON.parse(counterString)
-            setCounter(newCounter)
-        }
-    }
+    const {viewToSettings, setCounter, count, startValue, maxValue} = props
 
     const onClickCounterIncHandler = () => {
-        if (counter < maxCount) {
-            setCounter(++counter)
+        if (count < maxValue) {
+            setCounter(count + 1)
         }
-
     }
     const onClickCounterResetHandler = () => {
-        setCounter(minCount)
+        setCounter(startValue)
+    }
+    const viewToSettingsHandler = () => {
+        viewToSettings()
     }
 
     return (
         <div className={"counter-wrapper"}>
-            <div className={counter === maxCount ? "counter-red" : "counter"}>{counter}</div>
+            <div
+                className={count === maxValue ? "counter-red" : "counter"}>
+                {startValue === maxValue || startValue < 0 || startValue > maxValue || maxValue > 999
+                    ? <span>enter an incorrect value</span>
+                    : count}
+            </div>
 
             <div className={"button-wrapper"}>
-                <Button title={"inc"} onClick={onClickCounterIncHandler} disabled={counter === maxCount}/>
-                <Button title={"reset"} onClick={onClickCounterResetHandler} disabled={counter === minCount}/>
+                <Button title={"inc"} onClick={onClickCounterIncHandler}
+                        disabled={count === maxValue || startValue === maxValue || startValue < 0 || startValue > maxValue || maxValue > 999}/>
+                <Button title={"reset"} onClick={onClickCounterResetHandler}
+                        disabled={count === startValue || startValue === maxValue || startValue < 0 || startValue > maxValue || maxValue > 999}/>
+                {/*<Button title={"set"} onClick={viewToSettingsHandler}/>*/}
             </div>
         </div>
     );
