@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
 import {Counter} from "./components/Counter";
 import {SetSettings} from "./components/SetSettings";
@@ -11,26 +11,45 @@ function App() {
     const [startValue, setStartValue] = useState<number>(0)
     const [count, setCounter] = useState<number>(startValue)
 
-    // useEffect(() => {
-    //     localStorageGet()
-    // }, []);
-    //
-    //
-    // useEffect(() => {
-    //     localStorageSet()
-    // }, [count]);
-    //
-    // const localStorageSet = () => {
-    //     localStorage.setItem("counterValue", JSON.stringify(count))
-    // }
-    // const localStorageGet = () => {
-    //     let counterString = localStorage.getItem("counterValue")
-    //     if (counterString) {
-    //         let newCounter = JSON.parse(counterString)
-    //         setCounter(newCounter)
-    //     }
-    // }
+    useEffect(() => {
+        localStorageGet()
+    }, []);
 
+
+    useEffect(() => {
+        localStorageSet()
+    }, [count, maxValue, startValue]);
+
+    const localStorageSet = () => {
+        localStorage.setItem("counterValue", JSON.stringify(count))
+        localStorage.setItem("maxValue", JSON.stringify(maxValue))
+        localStorage.setItem("startValue", JSON.stringify(startValue))
+    }
+    const localStorageGet = () => {
+        let counterString = localStorage.getItem("counterValue")
+        let startValueString = localStorage.getItem("startValue")
+        let maxValueString = localStorage.getItem("maxValue")
+        if (counterString) {
+            let newCounter = JSON.parse(counterString)
+            setCounter(newCounter)
+        }
+        if (startValueString) {
+            let newStartValue = JSON.parse(startValueString)
+            setStartValue(newStartValue)
+        }
+        if (maxValueString) {
+            let newMaxValue = JSON.parse(maxValueString)
+            setMaxValue(newMaxValue)
+        }
+
+    }
+
+    const removeSettingsValue = () => {
+        localStorage.removeItem("startValue")
+        localStorage.removeItem("maxValue")
+        setStartValue(0)
+        setMaxValue(0)
+    }
 
 
     return (
@@ -38,7 +57,8 @@ function App() {
             {/*{counterView === "settings" ? (*/}
             <SetSettings viewToCounter={() => setCounterView("counter")} setCounter={setCounter}
                          startValue={startValue} maxValue={maxValue}
-                         setStartValue={setStartValue} setMaxValue={setMaxValue}/>
+                         setStartValue={setStartValue} setMaxValue={setMaxValue}
+                         removeSettingsValue={removeSettingsValue}/>
             {/*) : (*/}
             <Counter viewToSettings={() => setCounterView("settings")} setCounter={setCounter}
                      startValue={startValue} maxValue={maxValue}

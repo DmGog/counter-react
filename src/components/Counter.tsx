@@ -24,13 +24,16 @@ export const Counter = (props: CounterType) => {
         viewToSettings()
     }
 
+    const start = startValue === maxValue || startValue < 0 || startValue > maxValue || maxValue > 999 ?
+        <span>incorrect value</span> : count
+    console.log(maxValue)
+
     return (
         <div className={"counter-wrapper"}>
             <div
                 className={count === maxValue ? "counter-red" : "counter"}>
-                {startValue === maxValue || startValue < 0 || startValue > maxValue || maxValue > 999
-                    ? <span>enter an incorrect value</span>
-                    : count}
+                {startValue === 0 && maxValue === 0 ?
+                    <span className={"start"}>choose the starting values</span> : start}
             </div>
 
             <div className={"button-wrapper"}>
