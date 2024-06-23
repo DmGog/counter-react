@@ -1,5 +1,8 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import {Button} from "./Button";
+import useSound from "use-sound";
+import isDoneSetAudio from "./../audio/isDoneSet.mp3"
+
 
 type SetSettingsType = {
     setStartValue: (startValue: number) => void
@@ -22,9 +25,12 @@ export const SetSettings = (props: SetSettingsType) => {
         setMaxValue(Number(e.currentTarget.value))
     }
 
+
+    const [isDoneSetPlay] = useSound(isDoneSetAudio)
     const setValueCounter = () => {
         setCounter(startValue)
         viewToCounter()
+        isDoneSetPlay()
     }
 
     return (
@@ -39,12 +45,12 @@ export const SetSettings = (props: SetSettingsType) => {
                     value={startValue}
                     type={"number"} placeholder={"start value"}
                     onChange={changeStartValueHandler}
-                    className={startValue === maxValue || startValue < 0 || startValue > 999 || startValue > maxValue ? "input-error" : ""}/></label>
+                    className={startValue === maxValue || startValue < 0 || startValue > 999 ? "input-error" : ""}/></label>
             </div>
             <div className={"button-wrapper"}>
                 <Button title={"SET"} onClick={setValueCounter}
                         disabled={startValue === maxValue || startValue < 0 || startValue > maxValue || maxValue > 999}/>
-                <Button title={"CLEAR"} onClick={removeSettingsValue}/>
+                <Button title={"CLEAR"} onClick={removeSettingsValue} disabled={startValue === 0 && maxValue === 0}/>
             </div>
         </div>
     );

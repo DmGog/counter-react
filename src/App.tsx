@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import "./App.css";
 import {Counter} from "./components/Counter";
 import {SetSettings} from "./components/SetSettings";
-
+import useSound from "use-sound";
+import removeAudio from "./audio/remove.mp3"
 
 function App() {
 
@@ -44,11 +45,14 @@ function App() {
 
     }
 
+    const [removePlay] = useSound(removeAudio)
+
     const removeSettingsValue = () => {
         localStorage.removeItem("startValue")
         localStorage.removeItem("maxValue")
         setStartValue(0)
         setMaxValue(0)
+        removePlay()
     }
 
 
