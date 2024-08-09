@@ -1,43 +1,42 @@
-import React from "react";
+import React, {memo, useCallback} from "react";
 import {Button} from "./Button";
 import useSound from "use-sound";
 import incAudio from "./../audio/inc.mp3"
 import removeAudio from "./../audio/remove.mp3"
 import errorAudio from "./../audio/error.mp3"
+import {useDispatch} from "react-redux";
+import {incCounterAC, resetCounterAC} from "../state/counter-reducer";
 
 
 type CounterType = {
     count: number
     startValue: number
     maxValue: number
-    setCounter: (counter: number) => void
-    viewToSettings: () => void
+    // setCounter: (counter: number) => void
 }
 
-export const Counter = (props: CounterType) => {
-    const {viewToSettings, setCounter, count, startValue, maxValue} = props
+export const Counter = memo((props: CounterType) => {
+    const {count, startValue, maxValue} = props
+    const dispatch = useDispatch()
 
     const [incPlay] = useSound(incAudio)
     const [removePlay] = useSound(removeAudio)
     const [errorPlay] = useSound(errorAudio)
 
-    const onClickCounterIncHandler = () => {
+    const onClickCounterIncHandler = useCallback(() => {
         if (count < maxValue) {
-            setCounter(count + 1)
+            dispatch(incCounterAC(count + 1))
             incPlay()
         }
-    }
-    const onClickCounterResetHandler = () => {
-        setCounter(startValue)
+    }, [dispatch, incPlay, count])
+    const onClickCounterResetHandler = useCallback(() => {
+        dispatch(resetCounterAC(startValue))
         removePlay()
-    }
-    const viewToSettingsHandler = () => {
-        viewToSettings()
-    }
+    }, [dispatch, removePlay, startValue])
 
     const start = startValue === maxValue || startValue < 0 || startValue > maxValue || maxValue > 999 ?
         <span>incorrect value</span> : count
-    console.log(maxValue)
+
 
     if (startValue === maxValue || startValue < 0 || maxValue > 999 || maxValue < 0 || maxValue < startValue) {
         errorPlay()
@@ -56,9 +55,8 @@ export const Counter = (props: CounterType) => {
                         disabled={count === maxValue || startValue === maxValue || startValue < 0 || startValue > maxValue || maxValue > 999}/>
                 <Button title={"reset"} onClick={onClickCounterResetHandler}
                         disabled={count === startValue || startValue === maxValue || startValue < 0 || startValue > maxValue || maxValue > 999}/>
-                {/*<Button title={"set"} onClick={viewToSettingsHandler}/>*/}
             </div>
         </div>
     );
-};
+});
 

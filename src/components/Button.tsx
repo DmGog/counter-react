@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 
 type ButtonType = {
     title: string
@@ -7,11 +7,11 @@ type ButtonType = {
 
 }
 
-export const Button = (props: ButtonType) => {
+export const Button = memo( (props: ButtonType) => {
     const {title, onClick, disabled} = props
     return (
         <button onClick={onClick} disabled={disabled}>{title} </button>
     );
-};
+});
 
 

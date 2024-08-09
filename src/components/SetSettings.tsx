@@ -1,35 +1,35 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, memo} from "react";
 import {Button} from "./Button";
 import useSound from "use-sound";
 import isDoneSetAudio from "./../audio/isDoneSet.mp3"
+import {useDispatch} from "react-redux";
+import {startValueAC} from "../state/startValue-reducer";
+import {maxValueAC} from "../state/maxValue-reducer";
+import {resetCounterAC} from "../state/counter-reducer";
 
 
 type SetSettingsType = {
-    setStartValue: (startValue: number) => void
-    setMaxValue: (maxValue: number) => void
     maxValue: number
     startValue: number
-    setCounter: (startValue: number) => void
-    viewToCounter: () => void
     removeSettingsValue: () => void
 }
 
-export const SetSettings = (props: SetSettingsType) => {
+export const SetSettings = memo((props: SetSettingsType) => {
 
-    let {removeSettingsValue, viewToCounter, setCounter, setStartValue, setMaxValue, maxValue, startValue} = props
+    const {removeSettingsValue, maxValue, startValue} = props
+    const dispatch = useDispatch()
 
     const changeStartValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setStartValue(Number(e.currentTarget.value))
+        dispatch(startValueAC(Number(e.currentTarget.value)))
     }
     const changeMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMaxValue(Number(e.currentTarget.value))
+        dispatch(maxValueAC(Number(e.currentTarget.value)))
     }
 
 
     const [isDoneSetPlay] = useSound(isDoneSetAudio)
     const setValueCounter = () => {
-        setCounter(startValue)
-        viewToCounter()
+        dispatch(resetCounterAC(startValue))
         isDoneSetPlay()
     }
 
@@ -54,5 +54,5 @@ export const SetSettings = (props: SetSettingsType) => {
             </div>
         </div>
     );
-};
+});
 

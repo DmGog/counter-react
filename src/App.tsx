@@ -1,73 +1,40 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useState} from "react";
 import "./App.css";
 import {Counter} from "./components/Counter";
 import {SetSettings} from "./components/SetSettings";
 import useSound from "use-sound";
 import removeAudio from "./audio/remove.mp3"
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./state/store";
+import {startValueAC} from "./state/startValue-reducer";
+import {maxValueAC} from "./state/maxValue-reducer";
+import {resetCounterAC} from "./state/counter-reducer";
 
 function App() {
 
-    const [counterView, setCounterView] = useState("settings");
-    const [maxValue, setMaxValue] = useState<number>(0)
-    const [startValue, setStartValue] = useState<number>(0)
-    const [count, setCounter] = useState<number>(startValue)
+    let count = useSelector<AppRootStateType, number>(state => state.count.count)
+    let maxValue = useSelector<AppRootStateType, number>(state => state.maxValue.maxValue)
+    let startValue = useSelector<AppRootStateType, number>(state => state.startValue.startValue)
+    const dispatch = useDispatch()
 
-    useEffect(() => {
-        localStorageGet()
-    }, []);
-
-
-    useEffect(() => {
-        localStorageSet()
-    }, [count, maxValue, startValue]);
-
-    const localStorageSet = () => {
-        localStorage.setItem("counterValue", JSON.stringify(count))
-        localStorage.setItem("maxValue", JSON.stringify(maxValue))
-        localStorage.setItem("startValue", JSON.stringify(startValue))
-    }
-    const localStorageGet = () => {
-        let counterString = localStorage.getItem("counterValue")
-        let startValueString = localStorage.getItem("startValue")
-        let maxValueString = localStorage.getItem("maxValue")
-        if (counterString) {
-            let newCounter = JSON.parse(counterString)
-            setCounter(newCounter)
-        }
-        if (startValueString) {
-            let newStartValue = JSON.parse(startValueString)
-            setStartValue(newStartValue)
-        }
-        if (maxValueString) {
-            let newMaxValue = JSON.parse(maxValueString)
-            setMaxValue(newMaxValue)
-        }
-
-    }
 
     const [removePlay] = useSound(removeAudio)
 
-    const removeSettingsValue = () => {
-        localStorage.removeItem("startValue")
-        localStorage.removeItem("maxValue")
-        setStartValue(0)
-        setMaxValue(0)
+    const removeSettingsValue = useCallback(() => {
+        dispatch(startValueAC(0))
+        dispatch(maxValueAC(0))
+        dispatch(resetCounterAC())
         removePlay()
-    }
+    }, [dispatch])
 
 
     return (
         <div className="App">
-            {/*{counterView === "settings" ? (*/}
-            <SetSettings viewToCounter={() => setCounterView("counter")} setCounter={setCounter}
-                         startValue={startValue} maxValue={maxValue}
-                         setStartValue={setStartValue} setMaxValue={setMaxValue}
+            <SetSettings startValue={startValue} maxValue={maxValue}
                          removeSettingsValue={removeSettingsValue}/>
-            {/*) : (*/}
-            <Counter viewToSettings={() => setCounterView("settings")} setCounter={setCounter}
+            <Counter count={count}
                      startValue={startValue} maxValue={maxValue}
-                     count={count}/>
-            {/*)}*/}
+            />
         </div>
 
 
