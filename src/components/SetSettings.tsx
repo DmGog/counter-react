@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo} from "react";
+import React, {ChangeEvent, memo, useCallback} from "react";
 import {Button} from "./Button";
 import useSound from "use-sound";
 import isDoneSetAudio from "./../audio/isDoneSet.mp3"
@@ -28,10 +28,10 @@ export const SetSettings = memo((props: SetSettingsType) => {
 
 
     const [isDoneSetPlay] = useSound(isDoneSetAudio)
-    const setValueCounter = () => {
+    const setValueCounter = useCallback(() => {
         dispatch(resetCounterAC(startValue))
         isDoneSetPlay()
-    }
+    }, [dispatch, isDoneSetPlay, startValue])
 
     return (
         <div className={"settings-wrapper"}>

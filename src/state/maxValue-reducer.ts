@@ -1,4 +1,3 @@
-import React from "react";
 
 type maxValueAT = ReturnType<typeof maxValueAC>
 type ActionsType = maxValueAT

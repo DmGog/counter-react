@@ -12,7 +12,6 @@ type CounterType = {
     count: number
     startValue: number
     maxValue: number
-    // setCounter: (counter: number) => void
 }
 
 export const Counter = memo((props: CounterType) => {
@@ -29,6 +28,7 @@ export const Counter = memo((props: CounterType) => {
             incPlay()
         }
     }, [dispatch, incPlay, count])
+
     const onClickCounterResetHandler = useCallback(() => {
         dispatch(resetCounterAC(startValue))
         removePlay()

@@ -1,4 +1,3 @@
-import React from "react";
 
 type startValueAT = ReturnType<typeof startValueAC>
 type ActionsType = startValueAT
